@@ -1,0 +1,365 @@
+/* Basisfarben, inspiriert von der hochgeladenen Grafik */
+:root {
+  --primary-color: #0a3345;    /* dunkles Türkis, passend zum Logo */
+  --secondary-color: #c19745;  /* goldener Akzent */
+  /* Pastell hellgrau als Hintergrundfarbe. Dieser Ton ist weicher als reines Weiß
+     und sorgt für einen angenehmen Kontrast zu den farbigen Elementen. */
+  --background-color: #f3f4f6;
+  --button-color: var(--primary-color);
+  --button-text-color: #ffffff;
+  --button-hover-color: #114d6e;
+}
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  color: var(--primary-color);
+  background-color: var(--background-color);
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  text-align: center;
+  padding: 1rem;
+  background-color: var(--primary-color);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Container für das Video am Seitenanfang. Es sorgt dafür, dass das Video
+   die volle Breite innerhalb des Headers ausfüllt und abgerundete Ecken
+   besitzt. */
+.top-video {
+  width: 100%;
+  max-width: 600px;
+  margin-top: 1rem;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Das Video passt sich der verfügbaren Breite an. Die Höhe wird
+   automatisch auf das Seitenverhältnis des Videos skaliert. */
+#intro-video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+#logo {
+  width: 120px;
+  height: auto;
+  margin-bottom: 0.5rem;
+  border-radius: 12px;
+}
+
+h1, h2, h3 {
+  margin: 0.5rem 0;
+  font-weight: 600;
+}
+
+main {
+  flex: 1;
+  padding: 1rem;
+}
+
+#create-section {
+  max-width: 600px;
+  margin: 0 auto 2rem auto;
+  text-align: center;
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#birthdate {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+/* Eingabefeld für den Vornamen erhält denselben Stil wie das Datumsfeld */
+#firstname {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+/* Nummern‑Buttons */
+.animal-btn {
+  margin: 0.25rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background-color: var(--button-color);
+  color: var(--button-text-color);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.1s ease, background-color 0.2s ease;
+}
+
+.animal-btn:hover {
+  background-color: var(--button-hover-color);
+}
+
+.animal-btn:active {
+  transform: scale(0.95);
+}
+
+#selected-animal {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.animal-name {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.animal-image {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  margin: 0 auto;
+  display: block;
+}
+
+/* Mit dem Modifier .hidden kann jedes Element ausgeblendet werden. Da die
+   .modal-Klasse später in der Datei display:flex definiert, verwenden wir
+   !important, um sicherzustellen, dass versteckte Elemente nicht sichtbar
+   sind. */
+.hidden {
+  display: none !important;
+}
+
+/* Container für QR‑Codes */
+.codes-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+/* QR-Code-Wrapper: flexibel in der Höhe, damit die Share-Buttons darunter
+   Platz finden. Breite bleibt fix, Höhe passt sich dem Inhalt an. */
+.qr-item {
+  position: relative;
+  width: 140px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.qr-item:hover {
+  transform: scale(1.05);
+}
+
+/* QR-Code-Container passt sich der Breite an; die Höhe ergibt sich durch
+   das Canvas. */
+.qr-code {
+  width: 100%;
+  height: auto;
+}
+
+/* Logo in der Mitte des QR‑Codes. Wir setzen die Größe relativ klein,
+   damit das Logo den Code nicht zu stark verdeckt. */
+.qr-logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+/* Share‑Buttons unter jedem QR‑Code */
+/* Share-Buttons werden unter dem QR-Code positioniert. Keine absolute
+   Positionierung, damit sie unterhalb angezeigt werden. */
+.share-buttons {
+  margin-top: 0.25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.share-btn {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background-color: var(--secondary-color);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+/* Stil für Symbole im Share‑Button. Falls wir SVG‑Bilder verwenden,
+   invertieren wir die Farben, sodass schwarze SVGs auf dem goldenen
+   Hintergrund weiß erscheinen. */
+.share-btn img {
+  width: 16px;
+  height: 16px;
+  filter: invert(1);
+}
+
+.share-btn:hover {
+  background-color: #b58932;
+}
+
+/* Responsive Design für kleine Bildschirme */
+@media (max-width: 600px) {
+  .qr-item {
+    width: 100px;
+  }
+  .qr-logo {
+    width: 30px;
+    height: 30px;
+  }
+  .animal-image {
+    width: 80px;
+    height: 80px;
+  }
+  .modal-content {
+    width: 95%;
+  }
+}
+
+/* Modal‑Fenster */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.scan-view {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  max-width: 450px;
+  margin: 2rem auto;
+  color: var(--primary-color);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+.modal-content {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  max-width: 450px;
+  width: 90%;
+  position: relative;
+  color: var(--primary-color);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.close {
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.modal-animal-image {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  display: block;
+  margin: 0.5rem auto;
+}
+
+.amount-input {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.amount-input input {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.amount-input button {
+  background-color: var(--secondary-color);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.amount-input button:hover {
+  background-color: #b58932;
+}
+
+/* Container und Schaltfläche für die Bestätigung bei Überschreiten der 50‑€‑Schwelle */
+.confirm-reset-container {
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+.confirm-reset {
+  background-color: var(--secondary-color);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.confirm-reset:hover {
+  background-color: #b58932;
+}
+
+.golden-tick {
+  color: var(--secondary-color);
+  font-size: 1.5rem;
+  margin-left: 0.5rem;
+  vertical-align: middle;
+}
+
+.highlight {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: var(--secondary-color);
+}
+
+.hint {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 0;
+}

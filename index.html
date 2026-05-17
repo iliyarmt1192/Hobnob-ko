@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Seitentitel: neuer Slogan für HobNob -->
+  <title>HobNob sip. play. mingle.</title>
+  <!-- Hauptstylesheet -->
+  <link rel="stylesheet" href="styles.css">
+  <!-- Font Awesome für Share‑Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-ys+sMWXji3KyPeovF7NiUOxuEGPtYcC1jTZ8g9NMFBSwL0I+wozeF1E/HeYRvHDI5ZmBIgFpcK3OV7M9ptNS8w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+  <header>
+    <!-- Logo des Projekts (vom Nutzer hochgeladen) -->
+    <img src="assets/logo.jpeg" alt="Logo" id="logo">
+    <!-- Haupttitel der Seite -- ersetzt durch neuen Slogan -->
+    <h1>HobNob sip. play. mingle.</h1>
+    <!-- Video ohne Ton, das bei jedem Laden der Seite automatisch abgespielt wird -->
+    <div class="top-video">
+      <!-- Das Video ist stummgeschaltet und spielt automatisch. Es wird nicht geloopt, sodass es pro Seitenaufruf einmal abgespielt wird. -->
+      <video id="intro-video" autoplay muted playsinline>
+        <source src="assets/intro.mp4" type="video/mp4">
+        <!-- Fallback‑Text, falls der Browser kein Video abspielt -->
+        Dein Browser unterstützt das Video-Element nicht.
+      </video>
+    </div>
+  </header>
+  <main>
+    <!-- Abschnitt zum Erstellen neuer QR‑Codes -->
+    <section id="create-section">
+      <h2>Geburtsdatum eingeben</h2>
+      <!-- Neues Eingabefeld für den Vornamen des Gastes -->
+      <input type="text" id="firstname" placeholder="Vorname" required>
+      <input type="date" id="birthdate" required>
+      <p>Wähle eine Zahl von&nbsp;1 bis&nbsp;20, um dein Tier zu erhalten.</p>
+      <div id="number-buttons" class="grid"></div>
+      <div id="selected-animal" class="hidden">
+        <h3>Dein Tier</h3>
+        <p id="animal-name" class="animal-name"></p>
+        <img id="animal-image" class="animal-image" alt="Tierbild">
+      </div>
+    </section>
+
+    <!-- Liste der generierten QR‑Codes -->
+    <section id="qr-list">
+      <h2>Generierte QR‑Codes</h2>
+      <p class="hint">Klicke auf einen QR‑Code, um Details anzuzeigen und Beträge hinzuzufügen.</p>
+      <div id="codes-container" class="codes-container"></div>
+    </section>
+
+    <!-- Modal‑Fenster für Details und Betragseingabe -->
+    <div id="modal" class="modal hidden">
+      <div class="modal-content">
+        <span id="close-modal" class="close">&times;</span>
+        <h2>QR‑Code Details</h2>
+        <p><strong>Name:</strong>&nbsp;<span id="modal-name"></span></p>
+        <p><strong>Geburtsdatum:</strong>&nbsp;<span id="modal-date"></span></p>
+        <p><strong>Tier:</strong>&nbsp;<span id="modal-animal"></span></p>
+        <img id="modal-animal-image" class="modal-animal-image" alt="Tierbild">
+        <p><strong>Gesamtbetrag:</strong>&nbsp;<span id="modal-total">0,00</span>&nbsp;€
+          <span id="golden-tick" class="golden-tick hidden">✔</span>
+        </p>
+        <div class="amount-input">
+          <label for="amount">Betrag hinzufügen (in €):&nbsp;</label>
+          <input type="number" id="amount" min="0" step="0.01">
+          <button id="add-amount">Hinzufügen</button>
+        </div>
+
+        <!-- Bestätigungs‑Button, der erscheint, wenn der Betrag die Schwelle von 50 € übersteigt -->
+        <div id="confirm-reset-container" class="confirm-reset-container hidden">
+          <button id="confirm-reset" class="confirm-reset">OK</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scan‑Ansicht für gescannte QR‑Codes. Diese wird angezeigt, wenn die
+         Seite mit einem id‑Parameter geöffnet wird, z. B. beim Scannen
+         des QR‑Codes über ein Smartphone. -->
+    <section id="scan-view" class="scan-view hidden">
+      <h2>QR‑Code Information</h2>
+      <p><strong>Name:</strong>&nbsp;<span id="scan-name"></span></p>
+      <p><strong>Geburtsdatum:</strong>&nbsp;<span id="scan-date"></span></p>
+      <p><strong>Tier:</strong>&nbsp;<span id="scan-animal"></span></p>
+      <img id="scan-animal-image" class="modal-animal-image" alt="Tierbild">
+      <p><strong>Gesamtbetrag:</strong>&nbsp;<span id="scan-total">0,00</span>&nbsp;€
+        <span id="scan-golden-tick" class="golden-tick hidden">✔</span>
+      </p>
+      <div class="amount-input">
+        <label for="scan-amount">Betrag hinzufügen (in €):&nbsp;</label>
+        <input type="number" id="scan-amount" min="0" step="0.01">
+        <button id="scan-add-amount">Hinzufügen</button>
+      </div>
+      <!-- Bestätigungs‑Button für die 50‑€‑Schwelle in der Scan‑Ansicht -->
+      <div id="scan-confirm-container" class="confirm-reset-container hidden">
+        <button id="scan-confirm-reset" class="confirm-reset">OK</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Externe QR‑Code‑Bibliothek über CDN (Qrious) -->
+  <!-- Wir verwenden Qrious, eine reine JavaScript‑Bibliothek zur QR‑Code‑Erzeugung.
+       Sie wird per CDN eingebunden, damit kein eigenes Skript benötigt wird. -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+  <!-- Unsere Skripte für das Verhalten der Seite -->
+  <script src="script.js"></script>
+</body>
+</html>
